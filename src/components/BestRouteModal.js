@@ -37,11 +37,11 @@ const BestRouteModal = ({ open, onClose, bestTour, formData, bestLength }) => {
             variant="h6"
             component="h2"
           >
-            Najlepsza trasa i ustawienia
+            Best route and settings
           </Typography>
           <Box sx={{ mt: 2 }}>
             <Typography variant="subtitle1" align="center" sx={{ mb: 1 }}>
-              Trasa:
+              Route:
             </Typography>
             <Box
               sx={{
@@ -86,16 +86,16 @@ const BestRouteModal = ({ open, onClose, bestTour, formData, bestLength }) => {
             }}
           >
             <Typography variant="subtitle1" sx={{ mb: 1 }}>
-              Ustawienia:
+              Settings:
             </Typography>
             <Typography sx={{ fontSize: "0.75rem" }}>
-              Liczba mrówek: {formData.numAnts}
+              Ant count: {formData.numAnts}
             </Typography>
             <Typography sx={{ fontSize: "0.75rem" }}>
-              Liczba iteracji: {formData.numIterations}
+              Iteration count: {formData.numIterations}
             </Typography>
             <Typography sx={{ fontSize: "0.75rem" }}>
-              Współczynnik parowania: {formData.evaporationRate.toFixed(2)}
+              Evaporation rate: {formData.evaporationRate.toFixed(2)}
             </Typography>
             <Typography sx={{ fontSize: "0.75rem" }}>
               Alfa: {formData.alpha}
@@ -104,7 +104,7 @@ const BestRouteModal = ({ open, onClose, bestTour, formData, bestLength }) => {
               Beta: {formData.beta}
             </Typography>
             <Typography sx={{ fontSize: "0.75rem" }}>
-              Indeks początkowy: {formData.startIndex}
+              Starting city index: {formData.startIndex}
             </Typography>
           </Box>
         </Box>

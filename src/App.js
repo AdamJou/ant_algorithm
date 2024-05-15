@@ -115,7 +115,7 @@ function App() {
                     },
                   }}
                 >
-                  Zastosuj zmiany
+                  Apply changes
                 </Button>
               </Box>
             </Box>
@@ -135,7 +135,7 @@ function App() {
             {loading ? (
               <>
                 <Typography variant="h6" color={"white"} sx={{ mb: 1 }}>
-                  Przeliczanie...
+                  Calculating...
                 </Typography>
                 <CircularProgress disableShrink />
               </>
@@ -149,8 +149,8 @@ function App() {
                 }}
               >
                 <Typography variant="h6" color={"white"}>
-                  Długość trasy: {calculateTotalDistance(bestTour).toFixed(2)}{" "}
-                  jednostek
+                  Tour length: {calculateTotalDistance(bestTour).toFixed(2)}{" "}
+                  units
                 </Typography>
                 <Box sx={{ width: "100%", position: "relative" }}>
                   <CanvasMap
@@ -163,7 +163,7 @@ function App() {
                 {isCalculated && (
                   <>
                     <Typography variant="h6" color={"white"}>
-                      Najlepszy wynik: {bestLength.toFixed(2)} jednostek
+                      Best result: {bestLength.toFixed(2)} units
                     </Typography>
                     <Box
                       sx={{
@@ -185,7 +185,7 @@ function App() {
                           },
                         }}
                       >
-                        Pokaż szczegółową trasę
+                        Show route details
                       </Button>
                     </Box>
                   </>
