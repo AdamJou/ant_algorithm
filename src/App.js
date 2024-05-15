@@ -1,17 +1,11 @@
 import React, { useState } from "react";
 import "./App.css";
-import {
-  Grid,
-  Card,
-  CardContent,
-  Typography,
-  Button,
-  Box,
-} from "@mui/material";
+import { Grid, Typography, Button, Box, CircularProgress } from "@mui/material";
 import CanvasMap from "./components/CanvasMap";
 import DataForm from "./components/DataForm";
 import initialCities from "./components/Cities";
 import { antColonyOptimization, distance } from "./components/AntAlgorithm";
+import BestRouteModal from "./components/BestRouteModal";
 
 function App() {
   const [cities, setCities] = useState(initialCities);
@@ -25,16 +19,18 @@ function App() {
     beta: 4,
     startIndex: 0,
   });
-  const [loading, setLoading] = useState(false); // Loading state to manage loader display
+  const [loading, setLoading] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+  const [isCalculated, setIsCalculated] = useState(false);
+  const [shouldAnimate, setShouldAnimate] = useState(false);
 
   const handleApplyChanges = () => {
     if (formData.numIterations > 5000) {
       alert("The number of iterations cannot exceed 5000.");
       return;
     }
-    setLoading(true); // Activate the loader
+    setLoading(true);
     setTimeout(() => {
-      // Execute the algorithm and update state
       const bestTour = antColonyOptimization(
         cities,
         formData.numAnts,
@@ -46,18 +42,28 @@ function App() {
       );
 
       setBestTour(bestTour);
-      setLoading(false); // Deactivate the loader
+      setLoading(false);
+      setIsCalculated(true);
+      setShouldAnimate(true);
       const tourLength = calculateTotalDistance(bestTour);
       if (tourLength < bestLength) {
         setBestLength(tourLength);
       }
-    }, 0); // setTimeout to ensure UI updates to show the loader
+    }, 0);
   };
+
+  const toggleModal = () => setOpenModal(!openModal);
 
   return (
     <div className="App">
-      <Box sx={{ flexGrow: 1, padding: 2 }}>
-        <Grid container spacing={2}>
+      <Box
+        sx={{
+          flexGrow: 1,
+          maxWidth: "80%",
+          height: "100vh",
+        }}
+      >
+        <Grid container spacing={1} sx={{ height: "100%" }}>
           <Grid
             item
             xs={12}
@@ -67,31 +73,52 @@ function App() {
               flexDirection: "column",
               alignItems: "center",
               justifyContent: "center",
+              height: "100%",
             }}
           >
-            <DataForm
-              formData={formData}
-              setFormData={setFormData}
-              initialCities={initialCities}
-              disabled={loading}
-              sx={{ maxWidth: 400 }} // Smaller form size
-            />
-            <Button
-              variant="contained"
-              onClick={handleApplyChanges}
-              disabled={loading}
+            <Box
               sx={{
-                mt: 2, // Adds margin top for spacing
-                bgcolor: loading ? "grey.400" : "primary.main", // Conditionally set color
-                color: loading ? "grey.600" : "common.white", // Adjust text color for better visibility
-                ":hover": {
-                  bgcolor: loading ? "grey.400" : "primary.dark", // Maintain grey color on hover when loading
-                  color: loading ? "grey.600" : "common.white",
-                },
+                width: "100%",
+                maxWidth: 400,
+                textAlign: "center",
+                backgroundColor: "#E4F5FF",
+                borderRadius: 2,
+                boxShadow: "5px 5px #B9CFDC",
+                padding: 2,
+                height: "90%",
               }}
             >
-              Zastosuj zmiany
-            </Button>
+              <DataForm
+                formData={formData}
+                setFormData={setFormData}
+                initialCities={initialCities}
+                disabled={loading}
+              />
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  mt: 2,
+                }}
+              >
+                <Button
+                  variant="contained"
+                  onClick={handleApplyChanges}
+                  disabled={loading}
+                  sx={{
+                    bgcolor: "#0C658E",
+                    color: "common.white",
+                    ":hover": {
+                      bgcolor: "#31A7EF",
+                      color: "common.white",
+                    },
+                  }}
+                >
+                  Zastosuj zmiany
+                </Button>
+              </Box>
+            </Box>
           </Grid>
           <Grid
             item
@@ -102,62 +129,77 @@ function App() {
               flexDirection: "column",
               alignItems: "center",
               justifyContent: "center",
+              height: "100%",
             }}
           >
             {loading ? (
-              <Typography variant="h6" sx={{ mb: 2 }}>
-                Przeliczanie...
-              </Typography>
-            ) : (
-              <Typography variant="h6" sx={{ mb: 2 }}>
-                Długość trasy: {calculateTotalDistance(bestTour).toFixed(2)}{" "}
-                jednostki
-              </Typography>
-            )}
-            {loading ? (
-              <div className="loader"></div>
+              <>
+                <Typography variant="h6" color={"white"} sx={{ mb: 1 }}>
+                  Przeliczanie...
+                </Typography>
+                <CircularProgress disableShrink />
+              </>
             ) : (
               <Box
                 sx={{
                   width: "100%",
-                  height: 400,
-                  border: 1,
-                  borderColor: "grey.300",
-                  p: 1,
+                  maxWidth: 560,
+                  textAlign: "center",
+                  height: "90%",
                 }}
               >
-                <CanvasMap
-                  cities={cities}
-                  bestRoute={bestTour.map((city) => cities.indexOf(city))}
-                />
-                {loading ? (
-                  <div className="loader"></div>
-                ) : bestTour.length > 0 ? (
+                <Typography variant="h6" color={"white"}>
+                  Długość trasy: {calculateTotalDistance(bestTour).toFixed(2)}{" "}
+                  jednostek
+                </Typography>
+                <Box sx={{ width: "100%", position: "relative" }}>
+                  <CanvasMap
+                    cities={cities}
+                    bestRoute={bestTour.map((city) => cities.indexOf(city))}
+                    shouldAnimate={shouldAnimate}
+                    setShouldAnimate={setShouldAnimate}
+                  />
+                </Box>
+                {isCalculated && (
                   <>
-                    <Typography variant="h6" sx={{ mb: 2 }}>
+                    <Typography variant="h6" color={"white"}>
                       Najlepszy wynik: {bestLength.toFixed(2)} jednostek
                     </Typography>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        mt: 2,
+                      }}
+                    >
+                      <Button
+                        onClick={toggleModal}
+                        variant="contained"
+                        sx={{
+                          bgcolor: "#0C658E",
+                          color: "common.white",
+                          ":hover": {
+                            bgcolor: "#31A7EF",
+                            color: "common.white",
+                          },
+                        }}
+                      >
+                        Pokaż szczegółową trasę
+                      </Button>
+                    </Box>
                   </>
-                ) : (
-                  ""
                 )}
               </Box>
             )}
           </Grid>
-          <Grid item xs={12}>
-            <Typography variant="h6" sx={{ mb: 2 }}>
-              Najlepsza trasa:
-            </Typography>
-            {bestTour.map((city, index) => (
-              <Card key={index} sx={{ mb: 1 }}>
-                <CardContent>
-                  <Typography variant="body1">
-                    {index + 1}. {city.name}
-                  </Typography>
-                </CardContent>
-              </Card>
-            ))}
-          </Grid>
+          <BestRouteModal
+            open={openModal}
+            onClose={toggleModal}
+            bestTour={bestTour}
+            formData={formData}
+            bestLength={bestLength}
+          />
         </Grid>
       </Box>
     </div>

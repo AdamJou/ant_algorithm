@@ -1,5 +1,17 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap");
+
 .App {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   text-align: center;
+  background-color: #7b839f;
+}
+
+canvas {
+  max-width: 100%;
+  height: auto;
+  background-color: #e4f5ff;
 }
 
 .App-logo {

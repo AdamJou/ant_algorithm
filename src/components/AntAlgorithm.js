@@ -22,7 +22,6 @@ export function antColonyOptimization(
     .fill()
     .map(() => Array(cities.length).fill(1));
 
-  console.log(pheromones[0]);
   // Inicjalizacja najlepszej trasy i jej długości
   let bestTour = [];
   let bestTourLength = Infinity;
