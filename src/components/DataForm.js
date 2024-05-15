@@ -22,7 +22,7 @@ const DataForm = ({ formData, setFormData, initialCities, disabled }) => {
   return (
     <FormControl fullWidth disabled={disabled} margin="normal">
       <TextField
-        label="Liczba mrówek"
+        label="Ant count"
         type="number"
         name="numAnts"
         value={formData.numAnts}
@@ -32,7 +32,7 @@ const DataForm = ({ formData, setFormData, initialCities, disabled }) => {
         fullWidth
       />
       <TextField
-        label="Liczba iteracji"
+        label="Iteration count"
         type="number"
         name="numIterations"
         value={formData.numIterations}
@@ -43,7 +43,7 @@ const DataForm = ({ formData, setFormData, initialCities, disabled }) => {
         inputProps={{ max: 5000 }} // Limit the number of iterations to 5000
       />
       <TextField
-        label="Współczynnik parowania"
+        label="Evaporation rate"
         type="number"
         name="evaporationRate"
         value={formData.evaporationRate}
@@ -73,12 +73,12 @@ const DataForm = ({ formData, setFormData, initialCities, disabled }) => {
         fullWidth
       />
       <FormControl fullWidth margin="normal">
-        <InputLabel id="start-city-label">Miasto startowe</InputLabel>
+        <InputLabel id="start-city-label">Starting city</InputLabel>
         <Select
           labelId="start-city-label"
           id="start-city-select"
           value={formData.startIndex}
-          label="Miasto startowe"
+          label="Starting city"
           onChange={handleCityChange}
           disabled={disabled}
         >
