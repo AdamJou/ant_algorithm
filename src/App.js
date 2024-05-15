@@ -1,6 +1,14 @@
 import React, { useState } from "react";
 import "./App.css";
-import { Grid, Typography, Button, Box, CircularProgress } from "@mui/material";
+import {
+  Grid,
+  Typography,
+  Button,
+  Box,
+  CircularProgress,
+  Alert,
+  AlertTitle,
+} from "@mui/material";
 import CanvasMap from "./components/CanvasMap";
 import DataForm from "./components/DataForm";
 import initialCities from "./components/Cities";
@@ -10,6 +18,7 @@ import BestRouteModal from "./components/BestRouteModal";
 function App() {
   const [cities, setCities] = useState(initialCities);
   const [bestTour, setBestTour] = useState([]);
+  const [isNewBestFound, setIsNewBestFound] = useState(false);
   const [bestLength, setBestLength] = useState(Infinity);
   const [formData, setFormData] = useState({
     numAnts: 100,
@@ -45,14 +54,19 @@ function App() {
       setLoading(false);
       setIsCalculated(true);
       setShouldAnimate(true);
+      setIsNewBestFound(false);
       const tourLength = calculateTotalDistance(bestTour);
       if (tourLength < bestLength) {
         setBestLength(tourLength);
+        setIsNewBestFound(true);
       }
     }, 0);
   };
 
-  const toggleModal = () => setOpenModal(!openModal);
+  const toggleModal = () => {
+    setOpenModal(!openModal);
+    setIsNewBestFound(false);
+  };
 
   return (
     <div className="App">
@@ -162,9 +176,18 @@ function App() {
                 </Box>
                 {isCalculated && (
                   <>
-                    <Typography variant="h6" color={"white"}>
-                      Best result: {bestLength.toFixed(2)} units
-                    </Typography>
+                    {isNewBestFound && (
+                      <Alert severity="info">
+                        New best route has been found: {bestLength.toFixed(2)}{" "}
+                        units{" "}
+                      </Alert>
+                    )}
+                    {!isNewBestFound && (
+                      <Typography variant="h6" color={"white"}>
+                        Best result: {bestLength.toFixed(2)} units{" "}
+                      </Typography>
+                    )}
+
                     <Box
                       sx={{
                         display: "flex",
