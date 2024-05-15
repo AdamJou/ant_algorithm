@@ -18,5 +18,6 @@ const initialCities = [
   { name: "Poznań", x: 52.4064, y: 16.9252 },
   { name: "Szczecin", x: 53.4285, y: 14.5528 },
   { name: "Częstochowa", x: 50.8118, y: 19.1203 },
+  { name: "Kutno", x: 52.2306, y: 19.3643 },
 ];
 export default initialCities;
