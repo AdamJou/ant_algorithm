@@ -1,7 +1,7 @@
 import React from "react";
 import { Box, Modal, Backdrop, Fade, Typography, Chip } from "@mui/material";
 
-const BestRouteModal = ({ open, onClose, bestTour, formData, bestLength }) => {
+const BestRouteModal = ({ open, onClose, bestTour, bestSettings }) => {
   return (
     <Modal
       open={open}
@@ -89,22 +89,22 @@ const BestRouteModal = ({ open, onClose, bestTour, formData, bestLength }) => {
               Settings:
             </Typography>
             <Typography sx={{ fontSize: "0.75rem" }}>
-              Ant count: {formData.numAnts}
+              Ant count: {bestSettings.numAnts}
             </Typography>
             <Typography sx={{ fontSize: "0.75rem" }}>
-              Iteration count: {formData.numIterations}
+              Iteration count: {bestSettings.numIterations}
             </Typography>
             <Typography sx={{ fontSize: "0.75rem" }}>
-              Evaporation rate: {formData.evaporationRate.toFixed(2)}
+              Evaporation rate: {bestSettings.evaporationRate}
             </Typography>
             <Typography sx={{ fontSize: "0.75rem" }}>
-              Alfa: {formData.alpha}
+              Alfa: {bestSettings.alpha}
             </Typography>
             <Typography sx={{ fontSize: "0.75rem" }}>
-              Beta: {formData.beta}
+              Beta: {bestSettings.beta}
             </Typography>
             <Typography sx={{ fontSize: "0.75rem" }}>
-              Starting city index: {formData.startIndex}
+              Starting city index: {bestSettings.startIndex}
             </Typography>
           </Box>
         </Box>
