@@ -10,6 +10,7 @@ import BestRouteModal from "./components/BestRouteModal";
 function App() {
   const [cities, setCities] = useState(initialCities);
   const [bestTour, setBestTour] = useState([]);
+  const [bestSettings, setBestSettings] = useState([]);
   const [bestLength, setBestLength] = useState(Infinity);
   const [formData, setFormData] = useState({
     numAnts: 100,
@@ -48,6 +49,7 @@ function App() {
       const tourLength = calculateTotalDistance(bestTour);
       if (tourLength < bestLength) {
         setBestLength(tourLength);
+        setBestSettings(formData);
       }
     }, 0);
   };
@@ -197,8 +199,7 @@ function App() {
             open={openModal}
             onClose={toggleModal}
             bestTour={bestTour}
-            formData={formData}
-            bestLength={bestLength}
+            bestSettings={bestSettings}
           />
         </Grid>
       </Box>
