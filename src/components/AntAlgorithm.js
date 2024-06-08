@@ -27,6 +27,8 @@ export function antColonyOptimization(
         return {
           tour: [startIndex],
           visited: new Set([startIndex]),
+          tour: [startIndex],
+          visited: new Set([startIndex]),
           tourLength: 0,
         };
       });
@@ -86,6 +88,7 @@ export function antColonyOptimization(
         pheromones[i][j] *= 1 - evaporationRate;
       }
     }
+    // Add pheromones to the best route
     for (let j = 1; j < bestTour.length; j++) {
       pheromones[bestTour[j - 1]][bestTour[j]] += 1 / bestTourLength;
       pheromones[bestTour[j]][bestTour[j - 1]] += 1 / bestTourLength;

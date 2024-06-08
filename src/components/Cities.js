@@ -1,3 +1,4 @@
+//Add polish city with proper lat, lng
 const initialCities = [
   { name: "Wrocław", x: 51.1079, y: 17.0385 },
   { name: "Bydgoszcz", x: 53.1235, y: 18.0084 },
