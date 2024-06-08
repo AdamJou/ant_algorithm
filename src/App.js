@@ -25,7 +25,7 @@ function App() {
 
   const [bestLength, setBestLength] = useState(Infinity);
   const [formData, setFormData] = useState({
-    numAnts: 100,
+    numAnts: 20,
     numIterations: 100,
     evaporationRate: 0.1,
     alpha: 1,
