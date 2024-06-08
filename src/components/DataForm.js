@@ -6,6 +6,7 @@ import {
   Select,
   MenuItem,
   Button,
+  Typography,
 } from "@mui/material";
 
 const DataForm = ({ formData, setFormData, initialCities, disabled }) => {
@@ -20,6 +21,9 @@ const DataForm = ({ formData, setFormData, initialCities, disabled }) => {
 
   return (
     <FormControl fullWidth disabled={disabled} margin="normal">
+      <Typography variant="h6" fontSize="12px">
+        Works best with initial values
+      </Typography>
       <TextField
         label="Ant count"
         type="number"
